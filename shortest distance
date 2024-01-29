@@ -1,0 +1,15 @@
+t=int(input())
+for i in range(t):
+    n,x,y=map(int,input().split())
+    if x<n:
+        print("NO")
+    elif int(x/2)==n:
+        print("YES")
+    else:
+        a=int(y/3)
+        b=x-a
+        c=n-a
+        if b==int(c*2):
+            print("YES")
+        else:
+            print("NO")
