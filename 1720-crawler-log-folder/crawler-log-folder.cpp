@@ -4,7 +4,7 @@ public:
         int ans = 0;
         for(auto it : logs){
             if(it == "../"){
-                ans -= (ans>0);
+                if(ans > 0) ans--;
             }
             else if(it != "./"){
                 ans++;
