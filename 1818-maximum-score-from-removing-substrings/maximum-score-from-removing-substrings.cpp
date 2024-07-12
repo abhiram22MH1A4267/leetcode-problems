@@ -1,55 +1,36 @@
 class Solution {
 public:
-    int maximumGain(string s, int x, int y) {
-        int totalScore = 0;
-        string highPriorityPair = x > y ? "ab" : "ba";
-        string lowPriorityPair = highPriorityPair == "ab" ? "ba" : "ab";
-
-        // First pass: remove high priority pair
-        string stringAfterFirstPass = removeSubstring(s, highPriorityPair);
-        int removedPairsCount =
-            (s.length() - stringAfterFirstPass.length()) / 2;
-
-        // Calculate score from first pass
-        totalScore += removedPairsCount * max(x, y);
-
-        // Second pass: remove low priority pair
-        string stringAfterSecondPass =
-            removeSubstring(stringAfterFirstPass, lowPriorityPair);
-        removedPairsCount =
-            (stringAfterFirstPass.length() - stringAfterSecondPass.length()) /
-            2;
-
-        // Calculate score from second pass
-        totalScore += removedPairsCount * min(x, y);
-
-        return totalScore;
-    }
-
-private:
-    string removeSubstring(const string& input, const string& targetPair) {
-        stack<char> charStack;
-
-        // Iterate through each character in the input string
-        for (char currentChar : input) {
-            // Check if current character forms the target pair with the top of
-            // the stack
-            if (currentChar == targetPair[1] && !charStack.empty() &&
-                charStack.top() == targetPair[0]) {
-                charStack
-                    .pop();  // Remove the matching character from the stack
-            } else {
-                charStack.push(currentChar);
+    string subString(string &s, string &target){
+        stack<char>st;
+        for(auto it : s){
+            if(it == target[0] && !st.empty() && st.top() == target[1]){
+                st.pop();
+            }
+            else{
+                st.push(it);
             }
         }
-
-        // Reconstruct the remaining string after removing target pairs
-        string remainingChars;
-        while (!charStack.empty()) {
-            remainingChars += charStack.top();
-            charStack.pop();
+        string AfterRemove;
+        while(!st.empty()){
+            AfterRemove += st.top();
+            st.pop();
         }
-        reverse(remainingChars.begin(), remainingChars.end());
-        return remainingChars;
+        reverse(AfterRemove.begin(),AfterRemove.end());
+        return AfterRemove;
+    }
+    int maximumGain(string s, int x, int y) {
+        int ans = 0;
+        string highPriority = x < y ? "ab" : "ba";
+        string lowPriority = highPriority == "ab" ? "ba" : "ab";
+
+        string FirstString = subString(s,highPriority);
+        int count = (s.length()-FirstString.length())/2;
+        ans += count*max(x,y);
+
+        string SecondString = subString(FirstString,lowPriority);
+        count = (FirstString.length()-SecondString.length())/2;
+        ans += count*min(x,y);
+
+        return ans;
     }
 };
