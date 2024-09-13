@@ -1,14 +1,17 @@
 class Solution {
 public:
     vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries) {
-        vector<int>ans;
-        for(auto i : queries){
-            int xor_ele = 0;
-            for(int j = i[0]; j <= i[1]; j++){
-                xor_ele ^= arr[j];
-            }
-            ans.push_back(xor_ele);
+        vector<int> result;
+        for (int i = 1; i < arr.size(); ++i) {
+            arr[i] ^= arr[i - 1];
         }
-        return ans;
+        for (const auto& q : queries) {
+            if (q[0] > 0) {
+                result.push_back(arr[q[0] - 1] ^ arr[q[1]]);
+            } else {
+                result.push_back(arr[q[1]]);
+            }
+        }
+        return result;
     }
 };
