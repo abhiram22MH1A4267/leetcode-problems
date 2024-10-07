@@ -14,11 +14,12 @@ public:
                 st.push(s[i]);
             }
         }
-        string ans = "";
-        while(!st.empty()){
-            ans += st.top();
-            st.pop();
-        }
-        return ans.length();
+        return st.size();
+        // string ans = "";
+        // while(!st.empty()){
+        //     ans += st.top();
+        //     st.pop();
+        // }
+        // return ans.length();
     }
 };
