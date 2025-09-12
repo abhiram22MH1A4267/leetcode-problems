@@ -11,8 +11,6 @@ public:
     }
     bool doesAliceWin(string s) {
         int n = vowelCount(s);
-        if(n == 0) return false;
-        // else if((n & 1) == 0) return true;
-        return true;
+        return n > 0;
     }
 };
